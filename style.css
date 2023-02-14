@@ -1,0 +1,20 @@
+.grid {
+  display: flex;
+  justify-content: center;
+}
+
+.gridCol{
+  flex: 1;
+}
+
+.gridSquare {
+  padding: 10px;
+  min-width: 50px;
+  min-height: 50px;
+  margin: 2px;
+  border-width: 2px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: black;
+  background-color: white;
+}
