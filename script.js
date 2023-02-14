@@ -2,12 +2,14 @@ const MAX_DIMENSION = 100;
 const MIN_DIMENSION = 1;
 const DEFAULT_DIMENSION = 4;
 const GRID_PIXELS = 800;
+console.log(GRID_PIXELS);
 
 const DRAW_MODE = "DRAW MODE ON";
 const ERASE_MODE = "ERASE MODE ON";
 // Fills a grid with squares 
 function createGrid(dimensions) {
     const grid = document.querySelector('.grid');
+    const sizeText = document.querySelector('#.size');
     let gaps = dimensions - 1;
     let size = (GRID_PIXELS - gaps)/dimensions;
 
@@ -20,7 +22,7 @@ function createGrid(dimensions) {
         grid.appendChild(gridSquare);
     }
 
-    currentDimension = dimensions;
+    sizeText.textContent = `CURRENT SIZE: ${dimensions}`;
 }
 
 // Adds events for changing square colour on mouse hover
@@ -92,17 +94,17 @@ function createClickEvents() {
 // Enables and disables the ability to draw
 function toggleDrawMode() {
     const grid = document.querySelector('.grid');
-    const text = document.querySelector('h3');
+    const modeText = document.querySelector('.mode');
 
     // Alternating whether drawing occurs or not
     grid.classList.toggle('drawable');
 
     // Alternating mode text
-    if (text.textContent == DRAW_MODE) {
-        text.textContent = ERASE_MODE;
+    if (modeText.textContent == DRAW_MODE) {
+        modeText.textContent = ERASE_MODE;
     }
     else {
-        text.textContent = DRAW_MODE;
+        modeText.textContent = DRAW_MODE;
     }
 }
 
@@ -113,8 +115,6 @@ function wipeBoard() {
         square.classList.remove('hovered');
     })
 }
-
-currentDimension = DEFAULT_DIMENSION;
 
 createGrid(DEFAULT_DIMENSION);
 createHoverEvents();
