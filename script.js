@@ -37,5 +37,27 @@ function createHoverEvents() {
         }))
 }
 
+function clearGrid() {
+    const squares = document.querySelectorAll('.gridSquare');
+
+    squares.forEach(square => square.remove())
+}
+
+btn = document.querySelector('button');
+btn.addEventListener('click', function(e) {
+    let newDimension;
+    // Asking the user for a new grid size
+    keepGoing = true;
+    while (keepGoing) {
+        newDimension = prompt(`Enter new grid dimension (MAX ${MAX_DIMENSION}): `);
+        if (newDimension <= MAX_DIMENSION) {
+            keepGoing = false;
+        }
+    }
+    clearGrid();
+    createGrid(newDimension);
+    createHoverEvents();
+})
+
 createGrid(DEFAULT_DIMENSION);
 createHoverEvents();
