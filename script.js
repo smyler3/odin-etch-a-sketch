@@ -1,21 +1,21 @@
 const MAX_DIMENSION = 100;
 const DEFAULT_DIMENSION = 4;
+const GRID_PIXELS = 800;
 
 // Fills a grid with squares 
 function createGrid(dimensions) {
     const grid = document.querySelector('.grid');
+    let gaps = dimensions - 1;
+    //let borders = dimensions * 2;
+    let size = (GRID_PIXELS - gaps)/dimensions;
 
     // Creating the columns of the grid
-    for (let i = 0; i < dimensions; i++) {
-        const gridColumn = document.createElement('div');
-        gridColumn.classList.add('col');
-        // Creating the squares for each column
-        for (let j = 0; j < dimensions; j++) {
-            const gridSquare = document.createElement('div');
-            gridSquare.classList.add('gridSquare');
-            gridColumn.appendChild(gridSquare);
-        }
-        grid.appendChild(gridColumn);
+    for (let i = 0; i < dimensions * dimensions; i++) {
+        const gridSquare = document.createElement('div');
+        gridSquare.classList.add('gridSquare');
+        gridSquare.style.height = `${size}px`;
+        gridSquare.style.width = `${size}px`;
+        grid.appendChild(gridSquare);
     }
 }
 
@@ -34,6 +34,11 @@ function createHoverEvents() {
         square.addEventListener('mouseout', function(e) {
             //e.target.style.backgroundColor = "white";
             e.target.classList.remove('hovered');
+        }))
+
+    squares.forEach(square =>
+        square.addEventListener('click', function(e) {
+            e.target.classList.toggle('clicked');
         }))
 }
 
@@ -61,3 +66,5 @@ btn.addEventListener('click', function(e) {
 
 createGrid(DEFAULT_DIMENSION);
 createHoverEvents();
+
+console.log(Math.round((GRID_PIXELS - 99)/100));

@@ -1,20 +1,35 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
 .grid {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-}
-
-.gridCol{
-  flex: 1;
+  align-items: center;
+  gap: 1px;
+  width: 800px;
+  height: 800px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: burlywood;
 }
 
 .gridSquare {
-  padding: 10px;
-  min-width: 50px;
-  min-height: 50px;
-  margin: 2px;
-  border-width: 2px;
-  border-width: 2px;
-  border-style: solid;
-  border-color: black;
+  flex: 1 0 auto;
+  margin: 0px;
+  width: 7px;
+  height: 7px;
   background-color: white;
+}
+
+.grid, .hovered {
+  background-color: black;
+}
+
+.clicked {
+  background-color: blueviolet;
 }
