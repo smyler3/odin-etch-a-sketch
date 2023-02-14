@@ -2,19 +2,19 @@ const MAX_DIMENSION = 100;
 const MIN_DIMENSION = 1;
 const DEFAULT_DIMENSION = 4;
 const GRID_PIXELS = 800;
-console.log(GRID_PIXELS);
 
 const DRAW_MODE = "DRAW MODE ON";
 const ERASE_MODE = "ERASE MODE ON";
+
 // Fills a grid with squares 
 function createGrid(dimensions) {
     const grid = document.querySelector('.grid');
-    const sizeText = document.querySelector('#.size');
+    const sizeText = document.querySelector('.size');
     let gaps = dimensions - 1;
     let size = (GRID_PIXELS - gaps)/dimensions;
 
     // Creating the columns of the grid
-    for (let i = 0; i < dimensions * dimensions; i++) {
+    for (let i = 0; i < (dimensions * dimensions); i++) {
         const gridSquare = document.createElement('div');
         gridSquare.classList.add('gridSquare');
         gridSquare.style.height = `${size}px`;
@@ -45,16 +45,12 @@ function createHoverEvents() {
     squares.forEach(square =>
         square.addEventListener('mouseout', function(e) {
             if (!grid.classList.contains('drawable')) {
-                //e.target.style.backgroundColor = "white";
                 e.target.classList.remove('hovered');
             }
+            else {
+                e.target.classList.add('hovered');
+            }
         }))
-    /*
-    squares.forEach(square =>
-        square.addEventListener('click', function(e) {
-            grid.classList.toggle('drawable');
-        }))
-    */
 }
 
 function clearGrid() {
@@ -94,7 +90,7 @@ function createClickEvents() {
 // Enables and disables the ability to draw
 function toggleDrawMode() {
     const grid = document.querySelector('.grid');
-    const modeText = document.querySelector('.mode');
+    const modeText = document.querySelector('.drawMode');
 
     // Alternating whether drawing occurs or not
     grid.classList.toggle('drawable');
