@@ -6,7 +6,6 @@ const GRID_PIXELS = 800;
 function createGrid(dimensions) {
     const grid = document.querySelector('.grid');
     let gaps = dimensions - 1;
-    //let borders = dimensions * 2;
     let size = (GRID_PIXELS - gaps)/dimensions;
 
     // Creating the columns of the grid
@@ -21,12 +20,15 @@ function createGrid(dimensions) {
 
 // Adds events for changing square colour on mouse hover
 function createHoverEvents() {
+    const grid = document.querySelector('.grid');
     const squares = document.querySelectorAll('.gridSquare');
 
     squares.forEach(square =>
         square.addEventListener('mouseover', function(e) {
+            //if (grid.classList.contains('drawable')) {
             //e.target.style.backgroundColor = "black";
             e.target.classList.add('hovered');
+            //}
         })
     );
 
@@ -35,11 +37,12 @@ function createHoverEvents() {
             //e.target.style.backgroundColor = "white";
             e.target.classList.remove('hovered');
         }))
-
+    /*
     squares.forEach(square =>
         square.addEventListener('click', function(e) {
-            e.target.classList.toggle('clicked');
+            grid.classList.toggle('drawable');
         }))
+    */
 }
 
 function clearGrid() {
@@ -64,7 +67,12 @@ btn.addEventListener('click', function(e) {
     createHoverEvents();
 })
 
+// Enables and disables the ability to draw
+function toggleDrawMode() {
+    const grid = document.querySelector('.grid');
+    grid.classList.toggle('drawable');
+    console.log(Math.random());
+}
+
 createGrid(DEFAULT_DIMENSION);
 createHoverEvents();
-
-console.log(Math.round((GRID_PIXELS - 99)/100));
