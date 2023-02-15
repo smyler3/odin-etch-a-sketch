@@ -30,29 +30,50 @@ function createHoverEvents() {
     const grid = document.querySelector('.grid');
     const squares = document.querySelectorAll('.gridSquare');
 
+    // Changes grid square colour on hover
     squares.forEach(square =>
         square.addEventListener('mouseover', function(e) {
+            // Draw mode
             if (grid.classList.contains('drawable')) {
-                //e.target.style.backgroundColor = "black";
-                e.target.classList.add('hovered');
+                // Black/white mode
+                if (grid.classList.contains('black')) {
+                    e.target.style.backgroundColor = getRandomColour();
+                    //e.target.classList.add('hovered');
+                }
+                // Gradient mode
+                else if (grid.classList.contains('gradient')) {
+                    e.target.style.backgroundColour = getRandomColour();
+                    //e.target.style.backgroundColour = increaseGradient();
+                }
+                // Rainbow mode
+                else {
+                    e.target.style.backgroundColour = 'rgba(0, 0, 0, 0.1)';
+                }
             }
+            // Erase mode
             else {
-                e.target.classList.remove('hovered');    
+                e.target.style.backgroundColor = "white";
+                //e.target.classList.remove('hovered');    
             }
         })
     );
-
-    squares.forEach(square =>
-        square.addEventListener('mouseout', function(e) {
-            if (!grid.classList.contains('drawable')) {
-                e.target.classList.remove('hovered');
-            }
-            else {
-                e.target.classList.add('hovered');
-            }
-        }))
 }
 
+function getRandomColour() {
+    let transparency;
+
+    return `rgba(0, 0, 0, ${transparency})`;
+}
+
+function getRandomColour() {
+    let red = Math.floor(Math.random() * 255);
+    let green = Math.floor(Math.random() * 255);
+    let blue = Math.floor(Math.random() * 255);
+
+    return `rgb(${red}, ${green}, ${blue})`;
+}
+
+// Removes all current grid squares
 function clearGrid() {
     const squares = document.querySelectorAll('.gridSquare');
 
@@ -60,6 +81,10 @@ function clearGrid() {
 }
 
 function createClickEvents() {
+    // Creating the colour mode button
+    colourBtn = document.querySelector('#colour');
+    colourBtn.addEventListener('click', toggleColourMode);
+
     // Creating the draw/erase mode button
     drawBtn = document.querySelector('#drawErase');
     drawBtn.addEventListener('click', toggleDrawMode);
@@ -104,11 +129,40 @@ function toggleDrawMode() {
     }
 }
 
+// Changes the colours used when drawing
+function toggleColourMode() {
+    const grid = document.querySelector('.grid');
+    const colourModeText = document.querySelector('.colourMode');
+
+    // Activates gradient mode
+    if (grid.classList.contains('black')) {
+        grid.classList.remove('black');
+        grid.classList.add('gradient');
+        colourModeText.textContent = "COLOUR MODE: GRADIENT";
+        console.log(grid.classList);
+    }
+    // Activates rainbow mode
+    else if (grid.classList.contains('gradient')) {
+        grid.classList.remove('gradient');
+        grid.classList.add('rainbow');
+        colourModeText.textContent = "COLOUR MODE: RAINBOW";
+        console.log(grid.classList);
+    }
+    // Activates black/white mode
+    else {
+        grid.classList.remove('rainbow');
+        grid.classList.add('black');
+        colourModeText.textContent = "COLOUR MODE: BLACK/WHITE";
+        console.log(grid.classList);
+    }
+}
+
 function wipeBoard() {
     const squares = document.querySelectorAll('.gridSquare');
 
     squares.forEach(square => {
-        square.classList.remove('hovered');
+        square.style.backgroundColor = 'white';
+        //square.classList.remove('hovered');
     })
 }
 
