@@ -25,6 +25,7 @@ body {
   border-width: 10px;
   border-style: solid;
   border-color: burlywood;
+  background-color: rgba(0, 0, 0, 1);
 }
 
 .gridSquare {
@@ -32,11 +33,7 @@ body {
   margin: 0px;
   width: 7px;
   height: 7px;
-  background-color: white;
-}
-
-.grid, .hovered {
-  background-color: black;
+  background-color: rgba(255, 255, 255, 1);
 }
 
 #toolbar {

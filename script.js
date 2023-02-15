@@ -2,6 +2,8 @@ const MAX_DIMENSION = 100;
 const MIN_DIMENSION = 1;
 const DEFAULT_DIMENSION = 4;
 const GRID_PIXELS = 800;
+const FIRST_ALPHA = 0.9
+const ALPHA_INCREMENT = 0.1;
 
 const DRAW_MODE = "DRAW MODE ON";
 const ERASE_MODE = "ERASE MODE ON";
@@ -19,6 +21,7 @@ function createGrid(dimensions) {
         gridSquare.classList.add('gridSquare');
         gridSquare.style.height = `${size}px`;
         gridSquare.style.width = `${size}px`;
+        gridSquare.style.backgroundColor = 'rgba(255, 255, 255, 1)';
         grid.appendChild(gridSquare);
     }
 
@@ -27,50 +30,67 @@ function createGrid(dimensions) {
 
 // Adds events for changing square colour on mouse hover
 function createHoverEvents() {
-    const grid = document.querySelector('.grid');
     const squares = document.querySelectorAll('.gridSquare');
 
     // Changes grid square colour on hover
-    squares.forEach(square =>
-        square.addEventListener('mouseover', function(e) {
-            // Draw mode
-            if (grid.classList.contains('drawable')) {
-                // Black/white mode
-                if (grid.classList.contains('black')) {
-                    e.target.style.backgroundColor = getRandomColour();
-                    //e.target.classList.add('hovered');
-                }
-                // Gradient mode
-                else if (grid.classList.contains('gradient')) {
-                    e.target.style.backgroundColour = getRandomColour();
-                    //e.target.style.backgroundColour = increaseGradient();
-                }
-                // Rainbow mode
-                else {
-                    e.target.style.backgroundColour = 'rgba(0, 0, 0, 0.1)';
-                }
-            }
-            // Erase mode
-            else {
-                e.target.style.backgroundColor = "white";
-                //e.target.classList.remove('hovered');    
-            }
-        })
-    );
+    squares.forEach(square => square.addEventListener('mouseover', draw));
 }
 
-function getRandomColour() {
-    let transparency;
+// Colours the current square based on current settings
+function draw(e) {
+    const grid = document.querySelector('.grid');
 
-    return `rgba(0, 0, 0, ${transparency})`;
+    // Draw mode
+    if (grid.classList.contains('drawable')) {
+        // Black/white mode
+        if (grid.classList.contains('black')) {
+            e.target.style.backgroundColor = 'rgba(0, 0, 0, 1)';
+        }
+        // Gradient mode
+        else if (grid.classList.contains('gradient')) {
+            e.target.style.backgroundColor = increaseGradient(e);
+        }
+        // Rainbow mode
+        else {
+            e.target.style.backgroundColor = getRandomColour();
+        }
+    }
+    // Erase mode
+    else {
+        e.target.style.backgroundColor = 'rgba(255, 255, 255, 1)'; 
+    }
 }
 
+// Makes squares progressively darker
+function increaseGradient(e) {
+    let colour = e.target.style.backgroundColor;
+    var alpha = parseFloat(colour.split(',')[3]);
+
+    // Square has an alpha value
+    if (!isNaN(alpha)) {
+        // Square isn't at the minimum already
+        if (alpha > ALPHA_INCREMENT) {
+            return `rgba(255, 255, 255, ${alpha - ALPHA_INCREMENT})`; 
+        }
+        // Square is at the minimum already
+        return 'rgba(255, 255, 255, 0)';    
+    }
+    else {
+        if (colour == 'rgb(0, 0, 0)') {
+            return 'rgba(255, 255, 255, 0)';        
+        }
+        console.log(alpha);
+        return `rgba(255, 255, 255, ${FIRST_ALPHA})`; 
+    }
+}
+
+// Returns a random rgb value
 function getRandomColour() {
     let red = Math.floor(Math.random() * 255);
     let green = Math.floor(Math.random() * 255);
     let blue = Math.floor(Math.random() * 255);
 
-    return `rgb(${red}, ${green}, ${blue})`;
+    return `rgba(${red}, ${green}, ${blue}, 1)`;
 }
 
 // Removes all current grid squares
@@ -106,6 +126,7 @@ function createClickEvents() {
                 keepGoing = false;
             }
         }
+
         clearGrid();
         createGrid(newDimension);
         createHoverEvents();
@@ -157,12 +178,12 @@ function toggleColourMode() {
     }
 }
 
+// Resets the colour of every square
 function wipeBoard() {
     const squares = document.querySelectorAll('.gridSquare');
 
     squares.forEach(square => {
-        square.style.backgroundColor = 'white';
-        //square.classList.remove('hovered');
+        square.style.backgroundColor = 'rgba(255, 255, 255, 1)';
     })
 }
 
