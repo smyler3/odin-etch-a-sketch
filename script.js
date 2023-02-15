@@ -93,22 +93,14 @@ function getRandomColour() {
     return `rgba(${red}, ${green}, ${blue}, 1)`;
 }
 
-// Removes all current grid squares
-function clearGrid() {
-    const squares = document.querySelectorAll('.gridSquare');
-
-    squares.forEach(square => square.remove())
-}
-
 function createClickEvents() {
-    // Creating the colour mode button
-    colourBtn = document.querySelector('#colour');
-    colourBtn.addEventListener('click', toggleColourMode);
-
     // Creating the draw/erase mode button
     drawBtn = document.querySelector('#drawErase');
     drawBtn.addEventListener('click', toggleDrawMode);
 
+    // Creating the colour mode button
+    colourBtn = document.querySelector('#colour');
+    colourBtn.addEventListener('click', toggleColourMode);
 
     // Creating the wipe board button
     wipeBtn = document.querySelector('#wipe');
@@ -185,6 +177,13 @@ function wipeBoard() {
     squares.forEach(square => {
         square.style.backgroundColor = 'rgba(255, 255, 255, 1)';
     })
+}
+
+// Removes all current grid squares
+function clearGrid() {
+    const squares = document.querySelectorAll('.gridSquare');
+
+    squares.forEach(square => square.remove())
 }
 
 createGrid(DEFAULT_DIMENSION);
